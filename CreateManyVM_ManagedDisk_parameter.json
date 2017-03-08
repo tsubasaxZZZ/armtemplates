@@ -1,0 +1,39 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "adminUsername": {
+      "value": "tsunomur"
+    },
+    "adminPassword": {
+      "value": ""
+    },
+    "numberOfInstances":{
+        "value": 2
+    },
+    "addressPrefix" : {
+        "value": "10.6.0.0/24"
+    },
+    "subnetPrefix" : {
+        "value": "10.6.0.0/24"
+    },
+    "OS":{
+        "value": "Windows"
+    },
+    "vmSize" : {
+        "value": "Basic_A3"
+    },
+    "newOrExistingVnet" : {
+        "value": "existing"
+    },
+    "newOrExistingVnetName" : {
+        "value": "domain1-vnet"
+    },
+    "newOrExistingSubnetName" : {
+        "value": "dsc1"
+    },
+    "existingVnetResourceGroupName":{
+        "value": "domain1"
+    }
+  } 
+}

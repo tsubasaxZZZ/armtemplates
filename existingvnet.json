@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.1.0.0",
+  "parameters": {
+    "vnetName": {
+      "type": "string"
+    },
+    "subnetName": {
+      "type": "string"
+    },
+    "addressPrefix":{
+      "type": "string",
+      "defaultValue": "10.0.0.0/16",
+      "metadata": {
+        "description": "VNet address preffix(ex:10.0.0.0/16)"
+      }
+    },
+    "subnetPrefix":{
+      "type": "string",
+      "defaultValue": "10.0.0.0/24",
+      "metadata": {
+        "description": "subnet address preffix(ex:10.0.0.0/24)"
+      }
+    },
+    "existingVnetResourceGroupName": {
+      "type": "string",
+      "metadata": {
+        "description": "Resource group of the existing VNET"
+      }
+    }
+  },
+  "variables": {},
+  "resources": [],
+  "outputs": {
+    "subnet1Ref": {
+      "value": "[concat(resourceId(parameters('existingVnetResourceGroupName'), 'Microsoft.Network/virtualNetworks/', parameters('vnetName')), '/subnets/',parameters('subnetName'))]",
+      "type": "string"
+    }
+  }
+}
