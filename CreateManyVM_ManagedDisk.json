@@ -127,7 +127,7 @@
             "mode": "Incremental",
             "templateLink": {
                 "uri": "[variables('templatelink')]",
-                "contentVersion": "1.1.0.0"
+                "contentVersion": "1.2.0.0"
             },
             "parameters": {
                 "vnetName": {
