@@ -16,8 +16,8 @@
     },
     "numberOfInstances": {
       "type": "int",
-      "defaultValue": 2,
-      "minValue": 2,
+      "defaultValue": 1,
+      "minValue": 1,
       "maxValue": 40,
       "metadata": {
         "description": "Number of VMs to deploy, limit 5 since this sample is using a single storage account"
@@ -36,6 +36,13 @@
       "metadata": {
         "description": "subnet address preffix(ex:10.0.0.0/24)"
       }
+    },
+    "imageResourceID" : {
+      "type": "string"
+    },
+    "vmNamePrefix" : {
+      "type": "string",
+      "defaultValue": ""
     },
     "OS": {
       "type": "string",
@@ -150,7 +157,7 @@
     },
     {
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat('nic', copyindex())]",
+      "name": "[concat(parameters('vmNamePrefix'), 'VM', padLeft(copyIndex(1), 2, '0'))]",
       "apiVersion": "2016-12-01",
       "location": "[resourceGroup().location]",
       "copy": {
@@ -168,7 +175,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat('pip', copyIndex()))]"
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('vmNamePrefix'), 'VM', padLeft(copyIndex(1), 2, '0')))]"
               },
               "subnet": {
                 "id": "[reference('vnet-template').outputs.subnet1Ref.value]"
@@ -180,7 +187,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines",
-      "name": "[concat('vm', copyIndex())]",
+      "name": "[concat(parameters('vmNamePrefix'), 'VM', padLeft(copyIndex(1), 2, '0'))]",
       "apiVersion": "2017-03-30",
       "location": "[resourceGroup().location]",
       "copy": {
@@ -195,21 +202,23 @@
           "vmSize": "[parameters('vmSize')]"
         },
         "osProfile": {
-          "computerName": "[concat('vm', copyIndex())]",
+          "computerName": "[concat(parameters('vmNamePrefix'), 'VM', padLeft(copyIndex(1), 2, '0'))]",
           "adminUsername": "[parameters('adminUsername')]",
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
-          "imageReference": "[variables('imageReference')]",
+          //"imageReference": "[variables('imageReference')]",
+          "imageReference":{ "id" : "[parameters('imageResourceID')]"},
+          
           "osDisk": {
             "createOption": "FromImage",
-            "name": "[concat('OSDisk-', copyIndex())]"
+            "name": "[concat(parameters('vmNamePrefix'), 'VM', padLeft(copyIndex(1), 2, '0'))]"
           }
         },
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat('nic', copyindex()))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('vmNamePrefix'), 'VM', padLeft(copyIndex(1), 2, '0')))]"
             }
           ]
         }
@@ -218,7 +227,7 @@
     {
       "apiVersion": "2016-12-01",
       "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[concat('pip', copyIndex())]",
+      "name": "[concat(parameters('vmNamePrefix'), 'VM', padLeft(copyIndex(1), 2, '0'))]",
       "copy": {
         "name": "pipLoop",
         "count": "[parameters('numberOfInstances')]"
