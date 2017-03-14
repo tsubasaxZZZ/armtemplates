@@ -173,7 +173,7 @@
           {
             "name": "ipconfig1",
             "properties": {
-              "privateIPAllocationMethod": "Dynamic",
+              "privateIPAllocationMethod": "Static",
               "publicIPAddress": {
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('vmNamePrefix'), 'VM', padLeft(copyIndex(1), 2, '0')))]"
               },
@@ -207,8 +207,8 @@
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
-          //"imageReference": "[variables('imageReference')]",
-          "imageReference":{ "id" : "[parameters('imageResourceID')]"},
+          "imageReference": "[variables('imageReference')]",
+          //"imageReference":{ "id" : "[parameters('imageResourceID')]"},
           
           "osDisk": {
             "createOption": "FromImage",

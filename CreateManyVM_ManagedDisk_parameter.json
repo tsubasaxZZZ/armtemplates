@@ -17,23 +17,29 @@
     "subnetPrefix" : {
         "value": "10.6.0.0/24"
     },
+    "imageResourceID" : {
+        "value": "/subscriptions/33325c7f-089d-493b-9ad9-1400a8da5394/resourceGroups/NOTDELTE_Template/providers/Microsoft.Compute/images/WindowsServer2016-JPN-161013"
+    },
+    "vmNamePrefix" : {
+        "value": ""
+    },
     "OS":{
         "value": "Windows"
     },
     "vmSize" : {
-        "value": "Basic_A3"
+        "value": "Standard_F2s"
     },
     "newOrExistingVnet" : {
         "value": "existing"
     },
     "newOrExistingVnetName" : {
-        "value": "domain1-vnet"
+        "value": "IHIZabbix-vnet"
     },
     "newOrExistingSubnetName" : {
-        "value": "dsc1"
+        "value": "default"
     },
     "existingVnetResourceGroupName":{
-        "value": "domain1"
+        "value": "IHIZabbix"
     }
   } 
 }
