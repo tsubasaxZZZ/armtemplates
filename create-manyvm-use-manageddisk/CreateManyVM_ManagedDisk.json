@@ -122,7 +122,7 @@
       "version": "latest"
     },
     "imageReference": "[variables(parameters('OS'))]",
-    "templatelink": "[concat('https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/', parameters('newOrExistingVnet'),'vnet.json')]"
+    "templatelink": "[concat('https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-manyvm-use-manageddisk/', parameters('newOrExistingVnet'),'vnet.json')]"
 
   },
   "resources": [
@@ -207,8 +207,8 @@
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
-          "imageReference": "[variables('imageReference')]",
-          //"imageReference":{ "id" : "[parameters('imageResourceID')]"},
+          //"imageReference": "[variables('imageReference')]",
+          "imageReference":{ "id" : "[parameters('imageResourceID')]"},
           
           "osDisk": {
             "createOption": "FromImage",
