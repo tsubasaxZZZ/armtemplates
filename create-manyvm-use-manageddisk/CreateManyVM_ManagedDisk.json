@@ -70,7 +70,8 @@
             "Standard_F2",
             "Standard_F4",
             "Standard_F2s",
-            "Standard_F4s"
+            "Standard_F4s",
+            "Standard_F8s"            
         ]
     },
     "Storage Type" :{
@@ -207,8 +208,8 @@
           "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
-          //"imageReference": "[variables('imageReference')]",
-          "imageReference":{ "id" : "[parameters('imageResourceID')]"},
+          //"imageReference": "[variables('imageReference')]", // ギャラリーイメージを使用する場合は、こちらを使用
+          "imageReference":{ "id" : "[parameters('imageResourceID')]"}, // カスタムイメージを使用する場合は、こちらを使用
           
           "osDisk": {
             "createOption": "FromImage",
