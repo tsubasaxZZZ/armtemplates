@@ -19,12 +19,7 @@
 - ライセンスの期間
 
 # 展開方法
-## 1. パラメーター の編集
-`create_RDS_gateway.parameters.json` を開き、各設定を変更する。
-
-<font color="red">`dnsLabelPrefix` は、DNS 名となるためユニークになるようにすること。</font>
-
-## 2. Azure CLI による展開
+## 1. Azure CLI による展開
 ### ポータルから Cloud Shell を開く
 ポータルの右上にあるボタンから Cloud Shell を開きます。
 
@@ -45,6 +40,7 @@ git clone https://github.com/tsubasaxZZZ/armtemplates.git
 ```Bash
 az group create -g RDSGW-rg --location japaneast
 ```
+※ポータルから作成しても問題ありません。
 
 ### 展開
 次のコマンドを実行し、展開します。
@@ -52,8 +48,13 @@ az group create -g RDSGW-rg --location japaneast
 # ディレクトリの移動
 cd armtemplates/create-rdsgw-environment/
 # 展開の実行
-az group deployment create -g resource-group --name deploymentname --template-file create_RDS_gateway.json --parameters @create_RDS_gateway.parameters
-.json --no-wait
+az group deployment create -g resource-group --name deploymentname --template-file create_RDS_gateway.json --no-wait
+# パラメーターの入力
+#※ パスワードは大文字小文字数字を含んだ12桁以上にすること。
+#※ dnsLabelPrefix は、DNS 名となるためユニークになるようにすること。
+Please provide string value for 'adminUsername' (? for help): tsunomur
+Please provide securestring value for 'adminPassword' (? for help):
+Please provide string value for 'dnsLabelPrefix' (? for help): tsunomur1116
 ```
 
 ### 展開の完了
