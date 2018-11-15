@@ -29,7 +29,8 @@
 ## 3. Azure CLI による展開
 ### ポータルから Cloud Shell を開く
 ポータルの右上にあるボタンから Cloud Shell を開きます。
-![cs](asset/cs.png)
+
+![cs](https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/asset/cs.png)
 
 ### ストレージ アカウントの設定
 ストレージ アカウントを選択する画面が出てきた場合、
@@ -63,13 +64,20 @@ az group deployment create -g resource-group --name deploymentname --template-fi
 ## 4. RDS Gateway の設定
 ### 自己署名証明署の作成
 1. サーバー マネージャーから、Remote Desktop Gateway Manager を開きます。
-![rdgwm1](asset/rdgwm1.png)
+
+![rdgwm1](https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/asset/rdgwm1.PNG)
+
 2. Remote Desktop Gateway Manager のサーバーを右クリックし、[Properties]を開きます。
-![rdgwm2](asset/rdgwm2.png)
+
+![rdgwm2](https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/asset/rdgwm2.PNG)
+
 3. [SSL Certificate] タブを開きます。
+
 4. [Create a self-signed certificate] を選択します。
+
 5. [Certificate name:] に、RDSGW のパブリック IP アドレスを入力し、証明書を保存します。
-![rdgwm3](asset/rdgwm3.png)
+
+![rdgwm3](https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/asset/rdgwm3.PNG)
 
 ### 自己署名証明書のダウンロード
 保存した証明書を、手元の環境にダウンロードします。
@@ -81,7 +89,7 @@ RDSGW で、リモートデスクトップ接続を起動し、接続先に[DC]�
 ## 7. 接続元環境への証明書のインストール
 1. ダウンロードした証明書を右クリックし、[証明書のインストール]を押下します。
 2. ウィザードを進め、[証明書をすべて次のストアに配置する]を選択し、[信頼されたルート証明機関]にインストールします。
-![cc](asset/cc.png)
+![cc](https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/asset/cc.png)
 
 ## 8. RDP ファイルの編集
 RDP-sample.rdp ファイルをテキストで開き、`gatewayhostname:s:<IP アドレス>` の IP アドレスの部分を RDSGW 仮想マシンのパブリック IP アドレスに変更します。
