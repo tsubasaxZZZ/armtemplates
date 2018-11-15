@@ -1,3 +1,5 @@
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+
 # 展開する仮想マシン
 - ドメイン コントローラー(DC) 1台
 - リモート デスクトップ サーバー(RDSGW) 1台
