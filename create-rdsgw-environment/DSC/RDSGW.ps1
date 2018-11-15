@@ -80,7 +80,7 @@ Configuration RemoteDesktopSessionHost
             SessionHost = $localhost
             ConnectionBroker = if ($ConnectionBroker) {$ConnectionBroker} else {$localhost}
             WebAccessServer = if ($WebAccessServer) {$WebAccessServer} else {$localhost}
-            DependsOn = "[WindowsFeature]Remote-Desktop-Services", "[WindowsFeature]RDS-RD-Server"
+            DependsOn = "[WindowsFeature]Remote-Desktop-Services", "[WindowsFeature]RDS-RD-Server", "[WindowsFeature]RDS-Gateway", "[WindowsFeature]RSAT-RDS-Tools"
         }
 
         xRDSessionCollection Collection
@@ -109,7 +109,7 @@ Configuration RemoteDesktopSessionHost
             LogonMethod = "Password"
             UseCachedCredentials = $true
             BypassLocal = $true
-            DependsOn = "[xRDSessionCollectionConfiguration]CollectionConfiguration"
+            DependsOn = "[xRDSessionDeployment]Deployment"
         }
 
     }
