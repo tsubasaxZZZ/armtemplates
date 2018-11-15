@@ -32,7 +32,6 @@
         "metadata": {
             "description": "The location of resources, such as templates and DSC modules, that the template depends on"
         },
-        //"defaultValue": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/active-directory-new-domain"
         "defaultValue": "https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/"
       },
       "_artifactsLocationSasToken": {
@@ -407,12 +406,12 @@
         }
       },
       {
-        "type": "Microsoft.Compute/virtualMachines/extensions",
-        "name": "RDSInstall",
         "apiVersion": "2018-06-01",
+        "type": "Microsoft.Compute/virtualMachines/extensions",
+        "name": "[concat(variables('vmName-RDSGW'), '/RDSInstall')]",
         "location": "[parameters('location')]",
         "dependsOn": [
-            "[resourceId('Microsoft.Compute/virtualMachines/extensions', concat(variables('vmName-RDSGW'),'/joindomain'))]"
+            "[resourceId('Microsoft.Compute/virtualMachines/extensions', variables('vmName-RDSGW'),'joindomain')]"
         ],
         "properties": {
             "publisher": "Microsoft.Powershell",

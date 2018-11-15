@@ -105,10 +105,11 @@ Configuration RemoteDesktopSessionHost
             ConnectionBroker = if ($ConnectionBroker) {$ConnectionBroker} else {$localhost}
             GatewayServer = $localhost
             GatewayMode = "Custom"
-            ExternalFqdn = "tsunomur1114.japaneast.cloudapp.azure.com"
+            ExternalFqdn = "RDSGW.corp.contoso.com"
             LogonMethod = "Password"
             UseCachedCredentials = $true
             BypassLocal = $true
+            DependsOn = "[xRDSessionCollectionConfiguration]CollectionConfiguration"
         }
 
     }
