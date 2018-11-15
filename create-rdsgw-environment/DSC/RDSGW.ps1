@@ -100,6 +100,7 @@ Configuration RemoteDesktopSessionHost
             SecurityLayer = "SSL"
             DependsOn = "[xRDSessionCollection]Collection"
         }
+<#
         xRDGatewayConfiguration GatewayConfiguration
         {
             ConnectionBroker = if ($ConnectionBroker) {$ConnectionBroker} else {$localhost}
@@ -111,7 +112,7 @@ Configuration RemoteDesktopSessionHost
             BypassLocal = $true
             DependsOn = "[xRDSessionDeployment]Deployment"
         }
-
+#>
     }
 }
 RemoteDesktopSessionHost
