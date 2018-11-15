@@ -60,7 +60,7 @@ Please provide string value for 'dnsLabelPrefix' (? for help): tsunomur1116
 ### 展開の完了
 展開したリソース グループのメニューから、"デプロイ" を開き、展開が成功していることを確認します。
 
-## 3. RDS Gateway の設定
+## 2. RDS Gateway の設定
 ### 自己署名証明署の作成
 1. サーバー マネージャーから、Remote Desktop Gateway Manager を開きます。
 
@@ -81,17 +81,17 @@ Please provide string value for 'dnsLabelPrefix' (? for help): tsunomur1116
 ### 自己署名証明書のダウンロード
 保存した証明書を、手元の環境にダウンロードします。
 
-## 4. ユーザーの追加
+## 3. ユーザーの追加
 ユーザーは、DC から追加します。
 RDSGW で、リモートデスクトップ接続を起動し、接続先に[DC]を入力して接続します。
 
-## 5. 接続元環境への証明書のインストール
+## 4. 接続元環境への証明書のインストール
 1. ダウンロードした証明書を右クリックし、[証明書のインストール]を押下します。
 2. ウィザードを進め、[証明書をすべて次のストアに配置する]を選択し、[信頼されたルート証明機関]にインストールします。
 
 ![cc](https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/asset/cc.PNG)
 
-## 6. RDP ファイルの編集
+## 5. RDP ファイルの編集
 RDP-sample.rdp ファイルをテキストで開き、`gatewayhostname:s:<IP アドレス>` の IP アドレスの部分を RDSGW 仮想マシンのパブリック IP アドレスに変更します。
 
 # テンプレート詳細
