@@ -89,7 +89,8 @@ RDSGW で、リモートデスクトップ接続を起動し、接続先に[DC]�
 ## 7. 接続元環境への証明書のインストール
 1. ダウンロードした証明書を右クリックし、[証明書のインストール]を押下します。
 2. ウィザードを進め、[証明書をすべて次のストアに配置する]を選択し、[信頼されたルート証明機関]にインストールします。
-![cc](https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/asset/cc.png)
+
+![cc](https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/asset/cc.PNG)
 
 ## 8. RDP ファイルの編集
 RDP-sample.rdp ファイルをテキストで開き、`gatewayhostname:s:<IP アドレス>` の IP アドレスの部分を RDSGW 仮想マシンのパブリック IP アドレスに変更します。
