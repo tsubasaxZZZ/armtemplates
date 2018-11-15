@@ -1,4 +1,6 @@
-[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+<a href="https://azuredeploy.net/?repository=https://github.com/tsubasaxZZZ/armtemplates/tree/master/create-rdsgw-environment" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
 
 # 展開する仮想マシン
 - ドメイン コントローラー(DC) 1台
