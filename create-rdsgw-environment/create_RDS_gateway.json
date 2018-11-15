@@ -32,7 +32,8 @@
         "metadata": {
             "description": "The location of resources, such as templates and DSC modules, that the template depends on"
         },
-        "defaultValue": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/active-directory-new-domain"
+        //"defaultValue": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/active-directory-new-domain"
+        "defaultValue": "https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/"
       },
       "_artifactsLocationSasToken": {
         "type": "securestring",
@@ -419,20 +420,8 @@
             "typeHandlerVersion": "2.19",
             "autoUpgradeMinorVersion": true,
             "settings": {
-                "ModulesUrl": "[concat(parameters('_artifactsLocation'), '/DSC/CreateADPDC.zip', parameters('_artifactsLocationSasToken'))]",
-                "ConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
-                "Properties": {
-                    "DomainName": "[parameters('domainName')]",
-                    "AdminCreds": {
-                        "UserName": "[parameters('adminUsername')]",
-                        "Password": "PrivateSettingsRef:AdminPassword"
-                    }
-                }
-            },
-            "protectedSettings": {
-                "Items": {
-                    "AdminPassword": "[parameters('adminPassword')]"
-                }
+                "ModulesUrl": "[concat(parameters('_artifactsLocation'), '/DSC/xRemoteDesktopSessionHost.zip', parameters('_artifactsLocationSasToken'))]",
+                "ConfigurationFunction": "RDSGW.ps1\\RemoteDesktopSessionHost"
             }
         }
     }
