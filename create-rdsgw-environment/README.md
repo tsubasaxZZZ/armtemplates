@@ -1,8 +1,4 @@
-# 展開する仮想マシン
-- ドメイン コントローラー(DC) 1台
-- リモート デスクトップ サーバー(RDSGW) 1台
-
-# 環境
+# 展開する環境
 - 仮想ネットワーク
     - ネットワーク空間 : 10.0.0.0/16
     - サブネット(default) : 10.0.0.0/24
@@ -48,7 +44,7 @@ az group create -g RDSGW-rg --location japaneast
 # ディレクトリの移動
 cd armtemplates/create-rdsgw-environment/
 # 展開の実行
-az group deployment create -g resource-group --name deploymentname --template-file create_RDS_gateway.json --no-wait
+az group deployment create -g RDSGW-rg --name deploymentname --template-file create_RDS_gateway.json --no-wait
 # パラメーターの入力
 #※ パスワードは大文字小文字数字を含んだ12桁以上にすること。
 #※ dnsLabelPrefix は、DNS 名となるためユニークになるようにすること。
@@ -59,7 +55,7 @@ Please provide string value for 'dnsLabelPrefix' (? for help): tsunomur1116
 
 ### 展開の完了
 展開したリソース グループのメニューから、"デプロイ" を開き、展開が成功していることを確認します。
-
+![dploy]()
 ## 2. RDS Gateway の設定
 ### 自己署名証明署の作成
 1. サーバー マネージャーから、Remote Desktop Gateway Manager を開きます。
@@ -82,8 +78,9 @@ Please provide string value for 'dnsLabelPrefix' (? for help): tsunomur1116
 保存した証明書を、手元の環境にダウンロードします。
 
 ## 3. ユーザーの追加
-ユーザーは、DC から追加します。
-RDSGW で、リモートデスクトップ接続を起動し、接続先に[DC]を入力して接続します。
+ユーザーは、DC 上で追加します。
+
+RDSGW 上で、リモートデスクトップ接続を起動し、接続先に[DC]を入力して接続します。
 
 ## 4. 接続元環境への証明書のインストール
 1. ダウンロードした証明書を右クリックし、[証明書のインストール]を押下します。
