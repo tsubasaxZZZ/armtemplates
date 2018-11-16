@@ -1,4 +1,7 @@
 # 展開する環境
+
+![env](https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/asset/env.png)
+
 - 仮想ネットワーク
     - ネットワーク空間 : 10.0.0.0/16
     - サブネット(default) : 10.0.0.0/24
@@ -55,7 +58,9 @@ Please provide string value for 'dnsLabelPrefix' (? for help): tsunomur1116
 
 ### 展開の完了
 展開したリソース グループのメニューから、"デプロイ" を開き、展開が成功していることを確認します。
-![dploy]()
+
+![dploy](https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/asset/dploy.PNG)
+
 ## 2. RDS Gateway の設定
 ### 自己署名証明署の作成
 1. サーバー マネージャーから、Remote Desktop Gateway Manager を開きます。
