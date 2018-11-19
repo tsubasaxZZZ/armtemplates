@@ -48,9 +48,9 @@ az group create -g RDSGW-rg --location japaneast
 次のコマンドを実行し、展開します。
 ```Bash
 # zip ファイルの展開
-unzip armtemplates.zip
+unzip create-rdsgw-environment.zip -d armtemplates
 # ディレクトリの移動
-cd armtemplates-master/create-rdsgw-environment/
+cd armtemplates/create-rdsgw-environment/
 # 展開の実行
 az group deployment create -g RDSGW-rg --name deploymentname --template-file create_RDS_gateway.json --no-wait
 # パラメーターの入力
