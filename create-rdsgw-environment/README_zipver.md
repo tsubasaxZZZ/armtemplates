@@ -33,6 +33,7 @@
 
 ### リソースのアップロード
 リソースの zipファイル(create-rdsgw-environment) を Cloud Shell にアップロードします。
+
 ![upload](https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/create-rdsgw-environment/asset/upload.png)
 
 
