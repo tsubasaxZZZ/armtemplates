@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachineAdminUserName": {
+            "value": "tsunomur"
+        },
+        "virtualMachineAdminPassword": {
+            "value": ""
+        },
+        "virtualMachineNamePrefix": {
+            "value": "MyVM0"
+        },
+        "virtualMachineCount": {
+            "value": 2
+        },
+        "virtualMachineSize": {
+            "value": "Standard_DS1_v2"
+        },
+        "operatingSystem": {
+            "value": "Server2016"
+        },
+        "availabilitySetName": {
+            "value": "MyAvailabilitySet"
+        },
+        "dnsPrefixForPublicIP": {
+            "value": "tsunomur0830b"
+        }
+    }
+}

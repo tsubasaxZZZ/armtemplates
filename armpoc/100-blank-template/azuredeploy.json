@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "environmentName": {
+            "type": "string",
+            "allowedValues": [
+                "test",
+                "prod"
+            ]
+        }
+    },
+    "variables": {
+        "environmentSettings": {
+            "test": {
+                "instancesSize": "Small",
+                "instancesCount": 1
+            },
+            "prod": {
+                "instancesSize": "Large",
+                "instancesCount": 4
+            }
+        },
+        "currentEnvironmentSettings": "[variables('environmentSettings')[parameters('environmentName')]]",
+        "instancesSize": "[variables('currentEnvironmentSettings').instancesSize]",
+        "instancesCount": "[variables('currentEnvironmentSettings').instancesCount]"
+    },
+    "resources": [],
+    "outputs": {
+        "output": {
+            "type": "string",
+            "value": "[parameters('environmentName')]"
+        },
+        "output2": {
+            "type": "object",
+            "value": "[variables('environmentSettings')]"
+        },
+        "output3": {
+            "type": "string",
+            "value": "[variables('instancesSize')]"
+        },
+        "output4": {
+            "type": "string",
+            "value": "[toUpper(variables('instancesSize'))]"
+        },
+        "output5": {
+            "type": "int",
+            "value": "[add(1,10000000)]"
+        }
+    }
+}
