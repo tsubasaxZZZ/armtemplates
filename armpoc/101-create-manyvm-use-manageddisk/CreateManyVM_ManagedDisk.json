@@ -126,7 +126,7 @@
             "version": "latest"
         },
         "imageReference": "[variables(parameters('OS'))]",
-        "templatelink": "[concat('https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/armpoc/create-manyvm-use-manageddisk/', parameters('newOrExistingVnet'),'vnet.json')]"
+        "templatelink": "[concat('https://raw.githubusercontent.com/tsubasaxZZZ/armtemplates/master/armpoc/101-create-manyvm-use-manageddisk/', parameters('newOrExistingVnet'),'vnet.json')]"
     },
     "resources": [
         {
