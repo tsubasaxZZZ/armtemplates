@@ -6,16 +6,14 @@
       "value": "tsunomur"
     },
     "adminPassword": {
-      "value": "1qazXSW2"
+      "value": "Password1!tsunomur"
     },
     "numberOfInstances":{
         "value": 2
     },
-    // newOrExistingVnet が new の時は無視される
     "addressPrefix" : {
         "value": "10.5.1.0/24"
     },
-    // newOrExistingVnet が new の時は無視される
     "subnetPrefix" : {
         "value": "10.5.1.0/24"
     },
@@ -23,7 +21,7 @@
         "value": "/subscriptions/33325c7f-089d-493b-9ad9-1400a8da5394/resourceGroups/NOTDELTE_Template/providers/Microsoft.Compute/images/WindowsServer2016-JPN-161013"
     },
     "vmNamePrefix" : {
-        "value": "TEST"
+        "value": "POC"
     },
     "OS":{
         "value": "Windows"
@@ -32,16 +30,16 @@
         "value": "Standard_F4s"
     },
     "newOrExistingVnet" : {
-        "value": "existing"
+        "value": "new"
     },
     "newOrExistingVnetName" : {
-        "value": "domain1-vnet"
+        "value": "armpoc-vnet"
     },
     "newOrExistingSubnetName" : {
-        "value": "test1212"
+        "value": "default"
     },
     "existingVnetResourceGroupName":{
-        "value": "domain1"
+        "value": ""
     }
   } 
 }
