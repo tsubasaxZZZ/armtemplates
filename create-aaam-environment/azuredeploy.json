@@ -1,0 +1,241 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string"
+        },
+        "adminUserName": {
+            "type": "string"
+        },
+        "adminPassword": {
+            "type": "securestring"
+        },
+        "VirtualNetworkName": {
+            "type": "string"
+        },
+        "NSGName": {
+            "type": "string"
+        },
+        "VM" : {
+            "type": "object"
+        },
+        "Subnet":{
+            "type": "object"
+        }
+    },
+    "variables": {
+        "imageReference": {
+            "Windows": {
+                "publisher": "MicrosoftWindowsServer",
+                "offer": "WindowsServer",
+                "sku": "2016-Datacenter",
+                "version": "latest"
+            },
+            "Linux": {
+                "publisher": "OpenLogic",
+                "offer": "CentOS",
+                "sku": "7.6",
+                "version": "latest"
+            }
+        },
+        "subnet_list": "[parameters('Subnet').list]",
+        "vm_list": "[parameters('VM').list]",
+        "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'diag')]",
+        "VirtualNetworkName": "[parameters('VirtualNetworkName')]",
+        "addressPrefix": "10.0.0.0/16",
+        "nsgName": "[parameters('NSGName')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[variables('storageAccountName')]",
+            "apiVersion": "2018-07-01",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "kind": "Storage",
+            "properties": {}
+        },
+        {
+            "apiVersion": "2019-06-01",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[concat(variables('vm_list')[copyIndex()].name, '-pip')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            },
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            },
+            "copy": {
+                "name": "pip-copy",
+                "count": "[length(variables('vm_list'))]"
+            }
+        },
+        {
+            "apiVersion": "2018-08-01",
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[variables('virtualNetworkName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('nsgName'))]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('addressPrefix')]"
+                    ]
+                },
+                "copy": [
+                    {
+                        "name": "subnets",
+                        "count": "[length(variables('subnet_list'))]",
+                        "input": {
+                            "name": "[variables('subnet_list')[copyIndex('subnets')].name]",
+                            "properties": {
+                                "addressPrefix": "[variables('subnet_list')[copyIndex('subnets')].subnetPrefix]",
+                                "networkSecurityGroup": {
+                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2018-08-01",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('nsgName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "AllowRDP",
+                        "properties": {
+                            "description": "Allow RDP",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3389",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1000,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "AllowSSH",
+                        "properties": {
+                            "description": "Allow SSH",
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1100,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2018-08-01",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[concat(variables('vm_list')[copyIndex()].name, '-nic')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', concat(variables('vm_list')[copyIndex()].name, '-pip'))]",
+                "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(variables('vm_list')[copyIndex()].name, '-pip'))]"
+                            },
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('vm_list')[copyIndex()].subnetName)]"
+                            }
+                        }
+                    }
+                ]
+            },
+            "copy": {
+                "name": "nic-copy",
+                "count": "[length(variables('vm_list'))]"
+            }
+        },
+        {
+            "apiVersion": "2018-06-01",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[concat(variables('vm_list')[copyIndex()].name)]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces/', concat(variables('vm_list')[copyIndex()].name, '-nic'))]",
+                "nic-copy"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('vm_list')[copyIndex()].virtualMachineSize]"
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('vm_list')[copyIndex()].name)]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": "[variables('imageReference')[variables('vm_list')[copyIndex()].OS]]",
+                    "osDisk": {
+                        "name": "[concat(variables('vm_list')[copyIndex()].name,'_OSDisk')]",
+                        "caching": "ReadWrite",
+                        "createOption": "FromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[concat(variables('vm_list')[copyIndex()].storageAccountType)]"
+                        }
+                    },
+                    "dataDisks": [
+                        {
+                            "name": "[concat(variables('vm_list')[copyIndex()].name, '_DataDisk')]",
+                            "caching": "None",
+                            "createOption": "Empty",
+                            "diskSizeGB": 20,
+                            "managedDisk": {
+                                "storageAccountType": "[concat(variables('vm_list')[copyIndex()].storageAccountType)]"
+                            },
+                            "lun": 0
+                        }
+                    ]
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces/', concat(variables('vm_list')[copyIndex()].name, '-nic'))]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[reference(resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))).primaryEndpoints.blob]"
+                    }
+                }
+            },
+            "zones": "[variables('vm_list')[copyIndex()].zones]",
+            "copy": {
+                "name": "vm-copy",
+                "count": "[length(variables('vm_list'))]"
+            }
+        }
+    ],
+    "outputs": {}
+}

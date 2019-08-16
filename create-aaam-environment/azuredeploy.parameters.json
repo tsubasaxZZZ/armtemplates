@@ -1,0 +1,71 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "value": "southeastasia"
+        },
+        "adminUserName": {
+            "value": "azureuser"
+        },
+        "adminPassword": {
+            "value": "Password1!aaampoc"
+        },
+        "VirtualNetworkName": {
+            "value": "aaampoc-vnet"
+        },
+        "NSGName": {
+            "value": "aaampoc-nsg"
+        },
+        "Subnet": {
+            "value": {
+                "list":[
+                    {
+                        "name": "dc-subnet",
+                        "subnetPrefix": "10.0.1.0/24"
+                    },
+                    {
+                        "name": "member-subnet",
+                        "subnetPrefix": "10.0.2.0/24"
+                    }
+                ]
+            }
+        },
+        "VM": {
+            "value": {
+                "list": [
+                    {
+                        "name": "dc",
+                        "subnetName": "dc-subnet",
+                        "virtualMachineSize": "Standard_B2ms",
+                        "storageAccountType": "Premium_LRS",
+                        "OS": "Windows",
+                        "zones": [
+                            "1"
+                        ]
+                    },
+                    {
+                        "name": "vm1",
+                        "subnetName": "dc-subnet",
+                        "virtualMachineSize": "Standard_B2ms",
+                        "storageAccountType": "Premium_LRS",
+                        "OS": "Windows",
+                        "zones": [
+                            "2"
+                        ]
+                    },
+                    {
+                        "name": "vm2",
+                        "subnetName": "member-subnet",
+                        "virtualMachineSize": "Standard_B2ms",
+                        "storageAccountType": "Premium_LRS",
+                        "OS": "Linux",
+                        "zones": [
+                            "3"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

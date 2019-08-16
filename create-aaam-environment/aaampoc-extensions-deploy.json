@@ -1,0 +1,116 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUserName": {
+            "type": "string"
+        },
+        "adminPassword": {
+            "type": "securestring"
+        },
+        "VirtualNetworkName": {
+            "type": "string"
+        },
+        "NSGName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "Subnet": {
+            "type": "object"
+        },
+        "VM": {
+            "type": "object"
+        }
+    },
+    "variables": {
+        "subnet_list": "[parameters('Subnet').list]",
+        "nsgName": "[parameters('NSGName')]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "dc/CreateADForest",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publisher": "Microsoft.Powershell",
+                "type": "DSC",
+                "typeHandlerVersion": "2.76",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "ModulesUrl": "https://github.com/tsubasaxZZZ/armtemplates/blob/master/create-rdsgw-environment/DSC/CreateADPDC.zip?raw=true",
+                    "ConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
+                    "Properties": {
+                        "DomainName": "contoso.com",
+                        "AdminCreds": {
+                            "UserName": "[parameters('adminUsername')]",
+                            "Password": "PrivateSettingsRef:AdminPassword"
+                        }
+                    }
+                },
+                "protectedSettings": {
+                    "Items": {
+                        "AdminPassword": "[parameters('adminPassword')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2017-05-10",
+            "name": "UpdateDNS",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions', 'dc', 'CreateADForest')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Network/virtualNetworks",
+                            "name": "[parameters('virtualNetworkName')]",
+                            "apiVersion": "2016-03-30",
+                            "location": "[resourceGroup().location]",
+                            "dependsOn": [],
+                            "properties": {
+                                "addressSpace": {
+                                    "addressPrefixes": [
+                                        "10.0.0.0/16"
+                                    ]
+                                },
+                                "dhcpOptions": {
+                                    "dnsServers": [
+                                        "[reference('Microsoft.Network/networkInterfaces/dc-nic', '2016-09-01').ipConfigurations[0].properties.privateIPAddress]"
+                                    ]
+                                },
+                                "copy": [
+                                    {
+                                        "name": "subnets",
+                                        "count": "[length(variables('subnet_list'))]",
+                                        "input": {
+                                            "name": "[variables('subnet_list')[copyIndex('subnets')].name]",
+                                            "properties": {
+                                                "addressPrefix": "[variables('subnet_list')[copyIndex('subnets')].subnetPrefix]",
+                                                "networkSecurityGroup": {
+                                                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "parameters": {}
+            }
+        }
+    ],
+    "outputs": {}
+}
