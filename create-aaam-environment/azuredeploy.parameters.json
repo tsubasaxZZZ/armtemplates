@@ -19,7 +19,7 @@
         },
         "Subnet": {
             "value": {
-                "list":[
+                "list": [
                     {
                         "name": "dc-subnet",
                         "subnetPrefix": "10.0.1.0/24"
@@ -60,6 +60,16 @@
                         "virtualMachineSize": "Standard_B2ms",
                         "storageAccountType": "Premium_LRS",
                         "OS": "Linux",
+                        "zones": [
+                            "3"
+                        ]
+                    },
+                    {
+                        "name": "vm3",
+                        "subnetName": "member-subnet",
+                        "virtualMachineSize": "Standard_B2ms",
+                        "storageAccountType": "Premium_LRS",
+                        "OS": "Windows",
                         "zones": [
                             "3"
                         ]
