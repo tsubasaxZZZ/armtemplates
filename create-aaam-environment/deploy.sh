@@ -1,8 +1,8 @@
 #!/bin/sh
 
 git clone https://github.com/tsubasaxZZZ/armtemplates.git
-cd armtemplates
-rg=aaampoc
+cd armtemplates/create-aaam-environment
+rg=$1
 deployName=$(date '+%Y%m%d%H%M%S')
 az group create -g $rg -l southeastasia
 az group deployment create -g $rg --template-file azuredeploy.json --parameters '@azuredeploy.parameters.json' --name $deployName --mode Complete
