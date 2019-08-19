@@ -1,5 +1,10 @@
 #!/bin/sh
 
+if [ x"$1" -eq "" ]; then
+    echo "Please provide RG name."
+    exit 1
+fi
+
 git clone https://github.com/tsubasaxZZZ/armtemplates.git
 cd armtemplates/create-aaam-environment
 rg=$1
