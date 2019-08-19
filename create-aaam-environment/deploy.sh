@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ x"$1" -eq "" ]; then
+if [ x"$1" = x"" ]; then
     echo "Please provide RG name."
     exit 1
 fi
