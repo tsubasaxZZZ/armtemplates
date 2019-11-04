@@ -1,6 +1,6 @@
 {
 	"name": "Azure CLI",
-	"dockerFile": "Dockerfile",
+	"dockerfile": "Dockerfile",
 	
 	// The optional 'runArgs' property can be used to specify additional runtime arguments.
 	"runArgs": [
@@ -23,7 +23,7 @@
 	// "appPort": [],
 
 	// Uncomment the next line to run commands after the container is created.
-	// "postCreateCommand": "az --version",
+	"postCreateCommand": "az --version",
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
 	"extensions": [
