@@ -9,7 +9,7 @@
       "value": "Password1!tsunomur"
     },
     "numberOfInstances":{
-        "value": 2
+        "value": 5
     },
     "addressPrefix" : {
         "value": "10.5.1.0/24"
@@ -27,7 +27,7 @@
         "value": "Windows"
     },
     "vmSize" : {
-        "value": "Standard_F4s"
+        "value": "Standard_B4ms"
     },
     "newOrExistingVnet" : {
         "value": "new"
