@@ -10,7 +10,7 @@ cd armtemplates/create-aaam-environment
 rg=$1
 deployName=$(date '+%Y%m%d%H%M%S')
 az group create -g $rg -l southeastasia
-az group deployment create -g $rg --template-file azuredeploy.json --parameters '@azuredeploy.parameters.json' --name $deployName --mode Complete
+az group deployment create -g $rg --template-file azuredeploy.json --parameters '@azuredeploy.parameters.json' --name $deployName
 # Deploy Domain Controller
 az group deployment create -g $rg --template-file aaampoc-extensions-deploy.json  --parameters '@azuredeploy.parameters.json' --name ${deployName}-extensions
 az vm restart -g $rg --name vm1
