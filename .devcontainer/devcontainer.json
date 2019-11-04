@@ -1,6 +1,7 @@
 {
 	"name": "Azure CLI",
-	"dockerfile": "Dockerfile",
+	//"dockerfile": "Dockerfile",
+	"image": "nginx",
 	
 	// The optional 'runArgs' property can be used to specify additional runtime arguments.
 	"runArgs": [
