@@ -41,7 +41,7 @@ RUN apt-get update \
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
     && echo "HOGEHOGE" > /root/hoge.txt
 
 # Switch back to dialog for any ad-hoc use of apt-get
