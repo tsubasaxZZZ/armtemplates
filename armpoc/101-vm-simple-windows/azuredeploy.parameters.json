@@ -11,6 +11,12 @@
         },
         "windowsOSVersion": {
             "value": "2019-Datacenter"
+        },
+        "adminPassword": {
+            "value": "Password1!"
+        },
+        "location": {
+            "value": "japaneast"
         }
     }
 }
