@@ -1,0 +1,24 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subnetId": {
+            "value": "<Change here>"
+        },
+        "imageReferenceId": {
+            "value": "<Change here>"
+        },
+        "adminPassword": {
+            "value": "P@ssw0rd!"
+        },
+        "adminUsername": {
+            "value": "azureuser"
+        },
+        "vmssName": {
+            "value": "vmss-arm0224"
+        },
+        "dataCollectionRuleId": {
+            "value": "<Change here>"
+        }
+    }
+}
