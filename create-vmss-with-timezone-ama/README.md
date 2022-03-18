@@ -1,4 +1,4 @@
-# タイムゾーンを指定した VMSS の展開
+# タイムゾーンと Azure Monitor Agent をインストールする VMSS の展開
 
 ## 前提
 - VNet が展開されていること
